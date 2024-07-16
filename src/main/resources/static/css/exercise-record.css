@@ -1,0 +1,145 @@
+body {
+	font-family: 'Noto Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+header {
+	width: 100%;
+	text-align: center;
+	padding: 10px 0;
+	background-color: #f0f0f0;
+}
+
+main {
+	background-color: #1E1E1E;
+	width: 960px;
+	color: white;
+	justify-content: center;
+	padding: 30px;
+	margin: 20px auto;
+}
+
+.sub-title-area {
+	width: 100%;
+	height: 40px;
+	max-width: 980px;
+	display: flex;
+	align-items: center;
+}
+
+.sub-title {
+	width: 50%;
+	font-size: 2rem;
+	text-align: left;
+	margin-left: 2%;
+}
+
+.date {
+	width: 50%;
+	text-align: right;
+	font-size: 1.5rem;
+	margin-right: 2%;
+	opacity: 0.5;
+}
+
+.panel {
+	background-color: #31353C;
+	width: 90%;
+	height: auto;
+	margin: 0 auto 0 auto;
+	padding: 30px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	border-radius: 10px;
+}
+
+.calorie-label {
+	font-size: 1.5rem;
+	width: 100%;
+	text-align: left;
+	position: relative;
+}
+
+.panel-sub {
+	background-color: #5A626F;
+	width: 100%;
+	height: 70px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	border-radius: 10px;
+}
+
+.panel-void {
+	width: 100%;
+	height: 50px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.button-container {
+	width: 95%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: relative;
+}
+
+.btn-details {
+	font-size: 1.7rem;
+	color: white;
+}
+
+.btn:visited {
+	color: white;
+}
+
+.record-button-container {
+	width: 100%;
+	height: auto;
+	display: flex;
+	border-radius: 10px;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.record-button-item {
+	width: 50%;
+	height: auto;
+	font-size: 2rem;
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 10px;
+}
+
+.record-button-item:visited {
+	color: white;
+}
+
+.record-button-item:nth-child(1) {
+	background-color: #FE8A70;
+}
+
+.record-button-item:nth-child(2) {
+	background-color: #FFC876;
+}
+
+.record-button-item:nth-child(3) {
+	background-color: #8FCE5D;
+}
