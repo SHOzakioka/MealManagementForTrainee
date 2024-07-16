@@ -26,9 +26,9 @@ public class BodyMetricsCustomRepositoryImpl implements BodyMetricsCustomReposit
 	private EntityManager entityManager;
 
 	/**
-	 * user_idとrecord_dateを検索する
-	 * ヒットしたらmetricをupdateする
-	 * ヒットしなかったらレコードをinsertする
+	 * 取得したカラムのvalueがテーブルにあれば更新し、無ければレコードを追加するメソッドです。
+	 * 
+	 * @param obj
 	 */
 	@Override
 	public void upsertBodyMetrics(Object obj) {
