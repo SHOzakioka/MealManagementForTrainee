@@ -1,1 +1,2 @@
 # MealManagementForTrainee
+トレーニーのトレーニーによるトレーニーのための食事管理アプリ
