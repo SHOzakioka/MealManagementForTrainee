@@ -1,0 +1,44 @@
+.date {
+	width: 50%;
+	text-align: right;
+	font-size: 1.5rem;
+	margin-right: 2%;
+	opacity: 0.5;
+}
+
+.record-button-container {
+	width: 100%;
+	height: auto;
+	display: flex;
+	border-radius: 10px;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.record-button-item {
+	width: 50%;
+	height: auto;
+	font-size: 2rem;
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 10px;
+}
+
+.record-button-item:visited {
+	color: white;
+}
+
+.record-button-item:nth-child(1) {
+	background-color: #FE8A70;
+}
+
+.record-button-item:nth-child(2) {
+	background-color: #FFC876;
+}
+
+.record-button-item:nth-child(3) {
+	background-color: #8FCE5D;
+}
