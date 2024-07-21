@@ -1,7 +1,5 @@
 package jp.co.meal_management.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,12 +56,9 @@ public class MealManagementController {
 	@PostMapping("/weight-record")
 	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics) {
 
-		bodyMetrics.setUserId(5);
-		bodyMetrics.setRecordDate(new Date());
-		bodyMetrics.setMar(1750);
-
-		mealManagementRecord.saveRecord(bodyMetrics);
+		mealManagementRecord.saveWeightEntity(bodyMetrics.getWeightKg());
 		return "mealManagementWeightRecord";
+
 	}
 
 }
