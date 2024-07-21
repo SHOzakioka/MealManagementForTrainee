@@ -31,7 +31,7 @@
 					<b>今日の体重</b>
 				</div>
 				<div class="input-text-box">
-					<input type="text" class="input-text-field" th:field="*{weight}">
+					<input type="text" class="input-text-field" th:field="*{weightKg}">
 					<p>kg</p>
 				</div>
 			</section>
@@ -43,7 +43,7 @@
 		</form>
 
 		<section>
-			<p th:text="'今日の体重：' + ${bodyMetrics.weight}"></p>
+			<p th:text="'今日の体重：' + ${bodyMetrics.weightKg}"></p>
 		</section>
 	</main>
 
