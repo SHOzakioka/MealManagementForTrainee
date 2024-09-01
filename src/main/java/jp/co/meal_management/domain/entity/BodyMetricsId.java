@@ -1,18 +1,18 @@
 package jp.co.meal_management.domain.entity;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 public class BodyMetricsId implements Serializable {
-	private int userId;
+	private UUID userId;
 	private Date recordDate;
 
 	public BodyMetricsId() {
 	}
 
-	public BodyMetricsId(int userId, Date recordDate) {
+	public BodyMetricsId(UUID userId, Date recordDate) {
 		this.userId = userId;
 		this.recordDate = recordDate;
 	}

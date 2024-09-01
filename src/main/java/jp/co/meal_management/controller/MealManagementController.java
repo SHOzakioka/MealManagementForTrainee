@@ -47,7 +47,7 @@ public class MealManagementController {
 	}
 
 	@GetMapping("/weight-record")
-	public String showWeightRecord(Model model) {
+	public String getWeightRecord(Model model) {
 		model.addAttribute("bodyMetrics", new BodyMetrics());
 		return "mealManagementWeightRecord";
 
