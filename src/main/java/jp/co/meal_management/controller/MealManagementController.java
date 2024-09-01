@@ -1,5 +1,7 @@
 package jp.co.meal_management.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.meal_management.domain.entity.BodyMetrics;
+import jp.co.meal_management.infrastructure.security.SessionUserProvider;
 import jp.co.meal_management.use_case.MealManagementRecord;
 
 @Controller
@@ -15,6 +18,9 @@ public class MealManagementController {
 
 	@Autowired
 	private MealManagementRecord mealManagementRecord;
+	
+	@Autowired
+	private SessionUserProvider sessionUserProvider;
 
 	@GetMapping("/top")
 	public String showMealManagementTop(Model model) {
@@ -55,9 +61,14 @@ public class MealManagementController {
 
 	@PostMapping("/weight-record")
 	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics) {
-
-		mealManagementRecord.saveWeightEntity(bodyMetrics.getWeightKg());
-		return "mealManagementWeightRecord";
+		try {
+			UUID userId = sessionUserProvider.getCurrentUserId();
+			mealManagementRecord.saveWeightEntity(userId,bodyMetrics.getWeightKg());
+			return "mealManagementWeightRecord";
+			
+		}catch (RuntimeException e) {
+			return "mealManagementTop";
+		}
 
 	}
 

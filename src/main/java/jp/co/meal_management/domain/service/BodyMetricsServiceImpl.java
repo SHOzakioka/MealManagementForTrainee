@@ -23,7 +23,7 @@ public class BodyMetricsServiceImpl implements BodyMetricsService {
 	 * @return MAR
 	 */
 	@Override
-	public double calcurateMar(int sex, double weightKg, double heightCm, int age) {
+	public double calcurateMar(int age, int sex, double weightKg, double heightCm) {
 		if (bodyMetricsConstant.getMen() == sex) {
 			return bodyMetricsConstant.getMenWeightKgConst() * weightKg
 					+ bodyMetricsConstant.getMenHeightCmConst() * heightCm

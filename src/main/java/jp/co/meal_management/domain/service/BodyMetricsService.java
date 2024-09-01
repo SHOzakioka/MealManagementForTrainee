@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BodyMetricsService {
 
-	public double calcurateMar(int sex, double weightKg, double heightCm, int age);
+	public double calcurateMar(int age, int sex, double weightKg, double heightCm);
 
 }
