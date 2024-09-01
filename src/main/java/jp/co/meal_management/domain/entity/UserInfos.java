@@ -1,24 +1,31 @@
 package jp.co.meal_management.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
-import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Table(name = "user_infos", indexes = {
+		@Index(name = "idx_user_id", columnList = "user_id")
+})
 @Data
 public class UserInfos {
 
 	@Id
 	@Column(name = "user_id")
-	private int userId;
+	private UUID userId;
 
 	@Column(name = "user_name")
 	private String userName;
@@ -27,7 +34,7 @@ public class UserInfos {
 	private String userNameKna;
 
 	@Column(name = "birthday")
-	private Date birthday;
+	private LocalDateTime birthday;
 
 	@Column(name = "age")
 	private int age;
@@ -42,13 +49,16 @@ public class UserInfos {
 	private int bodyMakeSettingId;
 
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private Date createdAt;
+	private LocalDateTime createdAt;
 
 	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false)
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
+
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "user_id")
+	private UserAuths userAuths;
 
 }
