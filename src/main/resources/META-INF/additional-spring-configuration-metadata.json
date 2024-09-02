@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "Copyserver.servlet.session.timeout",
+  "type": "java.lang.String",
+  "description": "A description for 'Copyserver.servlet.session.timeout'"
+}]}

@@ -1,5 +1,6 @@
 package jp.co.meal_management.domain.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ import lombok.Data;
 		@Index(name = "idx_user_id", columnList = "user_id")
 })
 @Data
-public class UserInfos {
+public class UserInfos implements Serializable{
 
 	@Id
 	@Column(name = "user_id")

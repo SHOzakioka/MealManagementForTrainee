@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.meal_management.domain.entity.BodyMetrics;
+import jp.co.meal_management.infrastructure.security.SessionUserProvider;
 import jp.co.meal_management.use_case.MealManagementRecord;
 
 @Controller
@@ -15,6 +16,9 @@ public class MealManagementController {
 
 	@Autowired
 	private MealManagementRecord mealManagementRecord;
+
+	@Autowired
+	private SessionUserProvider sessionUserProvider;
 
 	@GetMapping("/top")
 	public String showMealManagementTop(Model model) {
@@ -47,18 +51,22 @@ public class MealManagementController {
 	}
 
 	@GetMapping("/weight-record")
-	public String showWeightRecord(Model model) {
+	public String getWeightRecord(Model model) {
 		model.addAttribute("bodyMetrics", new BodyMetrics());
 		return "mealManagementWeightRecord";
 
 	}
 
 	@PostMapping("/weight-record")
-	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics) {
+	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics, Model model) {
+		try {
+			mealManagementRecord.saveWeightEntity(sessionUserProvider.getCurrentUser(), bodyMetrics.getWeightKg());
+			mealManagementRecord.saveMarEntity(sessionUserProvider.getCurrentUser(), bodyMetrics.getWeightKg());
+			return "mealManagementWeightRecord";
 
-		mealManagementRecord.saveWeightEntity(bodyMetrics.getWeightKg());
-		return "mealManagementWeightRecord";
-
+		} catch (RuntimeException e) {
+			model.addAttribute("error", "体重の記録に失敗しました。");
+			return "mealManagementWeightRecord";
+		}
 	}
-
 }
