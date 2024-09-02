@@ -1,7 +1,5 @@
 package jp.co.meal_management.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +16,7 @@ public class MealManagementController {
 
 	@Autowired
 	private MealManagementRecord mealManagementRecord;
-	
+
 	@Autowired
 	private SessionUserProvider sessionUserProvider;
 
@@ -60,16 +58,14 @@ public class MealManagementController {
 	}
 
 	@PostMapping("/weight-record")
-	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics) {
+	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics, Model model) {
 		try {
-			UUID userId = sessionUserProvider.getCurrentUserId();
-			mealManagementRecord.saveWeightEntity(userId,bodyMetrics.getWeightKg());
+			mealManagementRecord.saveWeightEntity(sessionUserProvider.getCurrentUser(), bodyMetrics.getWeightKg());
 			return "mealManagementWeightRecord";
-			
-		}catch (RuntimeException e) {
-			return "mealManagementTop";
+
+		} catch (RuntimeException e) {
+			model.addAttribute("error", "体重の記録に失敗しました。");
+			return "mealManagementWeightRecord";
 		}
-
 	}
-
 }
