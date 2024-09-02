@@ -24,7 +24,6 @@ public class SecurityConfig {
 						.anyRequest().authenticated())
 				.formLogin(form -> form
 						// .loginPage("/login")
-						//.defaultSuccessUrl("/top", true)
 						.successHandler(customAuthenticationSuccessHandler)
 						.failureUrl("/login?error=true"))
 				.logout(logout -> logout

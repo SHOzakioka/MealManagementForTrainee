@@ -61,6 +61,7 @@ public class MealManagementController {
 	public String postWeightRecord(@ModelAttribute BodyMetrics bodyMetrics, Model model) {
 		try {
 			mealManagementRecord.saveWeightEntity(sessionUserProvider.getCurrentUser(), bodyMetrics.getWeightKg());
+			mealManagementRecord.saveMarEntity(sessionUserProvider.getCurrentUser(), bodyMetrics.getWeightKg());
 			return "mealManagementWeightRecord";
 
 		} catch (RuntimeException e) {

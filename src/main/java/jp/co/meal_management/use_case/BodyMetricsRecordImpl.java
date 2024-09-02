@@ -24,7 +24,6 @@ public class BodyMetricsRecordImpl implements MealManagementRecord {
 
 	/* インスタンス変数の定義 */
 	private final CustomRepository customRepository;
-	private final UserInfoRepository userInfoRepository;
 	private final BodyMetricsRepository bodyMetricsRepository;
 	private final BodyMetricsService bodyMetricsService;
 
@@ -34,53 +33,61 @@ public class BodyMetricsRecordImpl implements MealManagementRecord {
 		this.customRepository = customRepository;
 		this.bodyMetricsRepository = bodyMetricsRepository;
 		this.bodyMetricsService = bodyMetricsService;
-		this.userInfoRepository = userInfoRepository;
 	}
 
 	/**
-	 * 体重の値を受取ってテーブルを更新するメソッドです。 <br>
-	 * 体重を更新すると同時に基礎代謝も更新します。
+	 * 体重の値を更新するメソッドです。
 	 */
 	@Override
 	public void saveWeightEntity(Optional<UserInfos> foundEntity, double weightKg) {
-		// ローカル変数の宣言
-		UUID userId_ = foundEntity.get().getUserId();
-		int age_ = foundEntity.get().getAge();
-		int sexId_ = foundEntity.get().getSexId();
-		double heightCm_ = foundEntity.get().getHeightCm();
-
-		// BodyMetricsのインスタンスを生成
-		BodyMetrics bodyMetrics = new BodyMetrics();
-
-		// BodyMetricsIdの生成
-		BodyMetricsId bodyMetricsId = new BodyMetricsId(userId_, new Date());
-
-		// 基礎代謝を計算
-		double mar_ = bodyMetricsService.calcurateMar(age_, sexId_, weightKg, heightCm_);
-
-		// 体重を更新
-		customRepository.upsert(bodyMetricsRepository, bodyMetrics, bodyMetricsId, "weightKg", weightKg);
-
-		// 基礎代謝を更新
-		customRepository.upsert(bodyMetricsRepository, bodyMetrics, bodyMetricsId, "mar", mar_);
+        BodyMetrics bodyMetrics = createBodyMetrics(foundEntity);
+        updateBodyMetrics("weightKg", weightKg, bodyMetrics);
 	}
 
 	/**
-	 * 運動消費カロリーの値を受取ってテーブルを更新するメソッドです。 <br>
+	 * 基礎代謝の値を更新するメソッドです。
+	 */
+	@Override
+	public void saveMarEntity(Optional<UserInfos> foundEntity, double weightKg) {
+		BodyMetrics bodyMetrics = createBodyMetrics(foundEntity);
+		
+		// 基礎代謝を計算
+		int age = foundEntity.get().getAge();
+		int sexId = foundEntity.get().getSexId();
+		double heightCm = foundEntity.get().getHeightCm();
+        double mar = bodyMetricsService.calculateMar(age, sexId, weightKg, heightCm);
+        updateBodyMetrics("mar", mar, bodyMetrics);
+	}
+
+	/**
+	 * 運動消費カロリーの値を受取ってテーブルを更新するメソッドです。
 	 */
 	@Override
 	public void saveTeaEntity(Optional<UserInfos> foundEntity, double tea) {
-		// ローカル変数の宣言
-		UUID userId_ = foundEntity.get().getUserId();
-
-		// BodyMetricsのインスタンスを生成
-		BodyMetrics bodyMetrics = new BodyMetrics();
-
-		// BodyMetricsIdの生成
-		BodyMetricsId bodyMetricsId = new BodyMetricsId(userId_, new Date());
-
-		// 運動消費カロリーを更新
-		customRepository.upsert(bodyMetricsRepository, bodyMetrics, bodyMetricsId, "tea", tea);
+        BodyMetrics bodyMetrics = createBodyMetrics(foundEntity);
+        updateBodyMetrics("tea", tea, bodyMetrics);
 	}
+
+	/**
+	 * Sessinから取得したUser情報からBodyMetricsインスタンスを生成するメソッド
+	 * 
+	 */
+	public BodyMetrics createBodyMetrics(Optional<UserInfos> foundEntity) {
+        UUID userId = foundEntity.map(UserInfos::getUserId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+		Date currentTimestamp = new Date();
+		
+		BodyMetrics bodyMetrics = new BodyMetrics();
+		bodyMetrics.setUserId(userId);
+		bodyMetrics.setRecordDate(currentTimestamp);
+
+		return bodyMetrics;
+	}
+	
+	
+    private void updateBodyMetrics(String field, double value, BodyMetrics bodyMetrics) {
+        BodyMetricsId bodyMetricsId = new BodyMetricsId(bodyMetrics.getUserId(), bodyMetrics.getRecordDate());
+        customRepository.upsert(bodyMetricsRepository, bodyMetrics, bodyMetricsId, field, value);
+    }
 
 }
