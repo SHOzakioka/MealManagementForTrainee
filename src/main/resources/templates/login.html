@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ログイン</title>
+</head>
+<body>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username" />
+        </div>
+        <div>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" />
+        </div>
+        <button type="submit">ログイン</button>
+    </form>
+    <div th:if="${param.error}">
+        ログインIDまたはパスワードが間違っています。
+    </div>
+</body>
+</html>
